@@ -206,9 +206,9 @@ export default function ApplicationForm() {
   if (!validateStage3()) return;
 
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/applications`, {
+    const response = await fetch("http://backend.railway.internal:5000/api/applications", {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'applications/json' },
       body: JSON.stringify(formData),
     });
 
