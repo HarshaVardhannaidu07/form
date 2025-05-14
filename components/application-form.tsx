@@ -202,14 +202,26 @@ export default function ApplicationForm() {
   }
 
   // Handle form submission
-  const handleSubmit = () => {
-    const isValid = validateStage3()
+  const handleSubmit = async () => {
+  if (!validateStage3()) return;
 
-    if (isValid) {
-      console.log("Form submitted:", formData)
-      setIsSubmitted(true)
-    }
+  try {
+    const response = await fetch('backend-production-9357.up.railway.app', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) throw new Error('Submission failed');
+   
+    const result = await response.json();
+    console.log('Saved to MongoDB:', result.data);
+    setIsSubmitted(true);
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Submission failed. Please try again.');
   }
+}
 
   // Reset form
   const handleReset = () => {
