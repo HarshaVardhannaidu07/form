@@ -206,7 +206,7 @@ export default function ApplicationForm() {
   if (!validateStage3()) return;
 
   try {
-    const response = await fetch('backend-production-9357.up.railway.app', {
+    const response = await fetch('https://backend-production-9357.up.railway.app/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
