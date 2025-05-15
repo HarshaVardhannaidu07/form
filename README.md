@@ -51,12 +51,3 @@ Add environment variables in Vercel’s dashboard.
 Deploy!
 
 Note: Vercel auto-deploys on git push.
-
-📂 Project Structure
-.
-├── app/               # Next.js 13+ app router
-├── components/        # Reusable UI (e.g., buttons, inputs)
-├── lib/               # Utilities and helpers
-├── public/            # Static assets (images, fonts)
-├── styles/            # Global CSS/Sass
-└── package.json       # Dependencies and scripts
