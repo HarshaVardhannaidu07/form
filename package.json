@@ -2,7 +2,7 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://backend-production-9223.up.railway.app",
+  "proxy": "http://backend-production-9223.up.railway.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
