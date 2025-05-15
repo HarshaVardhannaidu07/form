@@ -29,8 +29,9 @@ cd form
 ##2. Install Dependencies
 bash
 npm install
-# or
-yarn
+
+
+
 3. Configure Environment (Optional)
 Create .env.local for sensitive variables:
 
