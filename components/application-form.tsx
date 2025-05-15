@@ -202,7 +202,7 @@ export default function ApplicationForm() {
   }
 
   // Handle form submission
-  const handleSubmit = const handleSubmit = () => {
+  const handleSubmit = () => {
     const isValid = validateStage3()
 
     if (isValid) {
