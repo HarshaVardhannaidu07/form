@@ -8,6 +8,8 @@ import { SuccessMessage } from "./success-message"
 import { StageIndicator } from "./stage-indicator"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+const [isSending, setIsSending] = useState(false);
+
 
 // Define the form data structure
 export type FormData = {
@@ -202,14 +204,43 @@ export default function ApplicationForm() {
   }
 
   // Handle form submission
-  const handleSubmit = () => {
-    const isValid = validateStage3()
+  const handleSubmit = async () => {
+  const isValid = validateStage3();
+  if (!isValid) return;
 
-    if (isValid) {
-      console.log("Form submitted:", formData)
-      setIsSubmitted(true)
+  setIsSending(true);
+
+  try {
+    const formDataToSend = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      formDataToSend.append(key, value);
+    });
+
+    // Add FormSubmit specific fields
+    formDataToSend.append('_subject', 'New Space Travel Application');
+    formDataToSend.append('_template', 'table'); // Makes email more readable
+    formDataToSend.append('_next', window.location.href); // Stay on same page after submit
+
+    const response = await fetch('https://formsubmit.co/ajax/your-email@example.com', {
+      method: 'POST',
+      body: formDataToSend,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      setIsSubmitted(true);
+    } else {
+      throw new Error('Submission failed');
     }
+  } catch (error) {
+    console.error('Submission error:', error);
+    alert('Failed to submit. Please try again later.');
+  } finally {
+    setIsSending(false);
   }
+};
 
   // Reset form
   const handleReset = () => {
@@ -248,8 +279,11 @@ export default function ApplicationForm() {
                   Next
                 </Button>
               ) : (
-                <Button type="button" onClick={handleSubmit}>
-                  Submit Application
+                <Button 
+                  type="button" 
+                  onClick={handleSubmit}
+                  disabled={isSending} >
+                {isSending ? 'Sending...' : 'Submit Application'}
                 </Button>
               )}
             </div>
