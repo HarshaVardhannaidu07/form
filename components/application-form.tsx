@@ -206,9 +206,9 @@ export default function ApplicationForm() {
   if (!validateStage3()) return;
 
   try {
-    const response = await fetch('http://localhost:5000/api/applications', {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/applications`, {
       method: 'POST',
-      headers: { 'Content-Type': 'applications/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData),
     });
 
