@@ -221,7 +221,7 @@ export default function ApplicationForm() {
     formDataToSend.append('_template', 'table'); // Makes email more readable
     formDataToSend.append('_next', window.location.href); // Stay on same page after submit
 
-    const response = await fetch('https://formsubmit.co/ajax/your-email@example.com', {
+    const response = await fetch('https://formsubmit.co/ajax/gmrao800@gmail.com', {
       method: 'POST',
       body: formDataToSend,
       headers: {
