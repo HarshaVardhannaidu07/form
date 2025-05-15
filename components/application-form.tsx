@@ -204,43 +204,55 @@ export default function ApplicationForm() {
   }
 
   // Handle form submission
-  const handleSubmit = async () => {
-  const isValid = validateStage3();
-  if (!isValid) return;
+ async () => {
+    const isValid = validateStage3();
+    if (!isValid) return;
 
-  setIsSending(true);
+    setIsSending(true);
 
-  try {
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      formDataToSend.append(key, value);
-    });
+    try {
+      // Create a hidden form element
+      const form = document.createElement('form');
+      form.action = 'https://formsubmit.co/your-email@example.com';
+      form.method = 'POST';
+      form.style.display = 'none';
 
-    // Add FormSubmit specific fields
-    formDataToSend.append('_subject', 'New Space Travel Application');
-    formDataToSend.append('_template', 'table'); // Makes email more readable
-    formDataToSend.append('_next', window.location.href); // Stay on same page after submit
+      // Add all form data
+      Object.entries(formData).forEach(([key, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      });
 
-    const response = await fetch("https://formsubmit.co/gmrao800@email.com", {
-      method: 'POST',
-      body: formDataToSend,
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+      // FormSubmit options
+      const subject = document.createElement('input');
+      subject.type = 'hidden';
+      subject.name = '_subject';
+      subject.value = 'New Space Travel Application';
+      form.appendChild(subject);
 
-    if (response.ok) {
+      const template = document.createElement('input');
+      template.type = 'hidden';
+      template.name = '_template';
+      template.value = 'table';
+      form.appendChild(template);
+
+      // Add to DOM and submit
+      document.body.appendChild(form);
+      form.submit();
+
+      // Show success UI
       setIsSubmitted(true);
-    } else {
-      throw new Error('Submission failed');
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('Failed to submit. Please try again.');
+    } finally {
+      setIsSending(false);
     }
-  } catch (error) {
-    console.error('Submission error:', error);
-    alert('Failed to submit. Please try again later.');
-  } finally {
-    setIsSending(false);
   }
-};
+
 
   // Reset form
   const handleReset = () => {
