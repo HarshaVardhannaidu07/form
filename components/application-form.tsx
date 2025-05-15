@@ -202,26 +202,14 @@ export default function ApplicationForm() {
   }
 
   // Handle form submission
-  const handleSubmit = aasync () => {
-  if (!validateStage3()) return;
+  const handleSubmit = const handleSubmit = () => {
+    const isValid = validateStage3()
 
-  try {
-    const response = await fetch('http://localhost:5000/api/applications', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) throw new Error('Submission failed');
-   
-    const result = await response.json();
-    console.log('Saved to MongoDB:', result.data);
-    setIsSubmitted(true);
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Submission failed. Please try again.');
+    if (isValid) {
+      console.log("Form submitted:", formData)
+      setIsSubmitted(true)
+    }
   }
-}
 
   // Reset form
   const handleReset = () => {
